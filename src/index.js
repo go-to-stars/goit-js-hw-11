@@ -3,8 +3,13 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import PicturesSearchService from './js/search-service.js'; // дефолтний імпорт сласу PicturesSearchService
 import { markupCardСreation } from './js/markupCardСreation.js'; // іменований імпорт функції markupСreation
 import './css/styles.css'; // імпорт файлу стилів
-
 import { Notify } from 'notiflix/build/notiflix-notify-aio'; // імпорт бібліотеки notiflix
+
+var lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt', // підпис малюнку
+  captionPosition: 'bottom', // місце виведення підпису малюнку
+  captionDelay: 250, // затримка виведення підпису малюнку
+}); // робота з галереєю через бібліотеку "simplelightbox" (створюємо екземпляр бібліотеки, який оновлюєм при додовання нових карток в галерею (refresh())
 
 const picturesSearchService = new PicturesSearchService();
 
@@ -172,12 +177,7 @@ async function onLoadMore() {
 
 function appendHitsMarkup(hits) {
   refs.imagesList.insertAdjacentHTML('beforeend', onMarkup(hits));
-
-  const lightbox = new SimpleLightbox('.gallery a', {
-    captionsData: 'alt', // підпис малюнку
-    captionPosition: 'bottom', // місце виведення підпису малюнку
-    captionDelay: 250, // затримка виведення підпису малюнку
-  }).refresh(); // робота з галереєю через бібліотеку "lightbox"
+  lightbox.refresh(); // оновити галереєю для бібліотеки "simpleLightbox"
 } // функція додавання розмітки в DOM за одну операцію та активації бібліотеки "lightbox" в цій ромітці та при повторному додаванні розмітки (refresh())
 
 function onMarkup(hits) {
